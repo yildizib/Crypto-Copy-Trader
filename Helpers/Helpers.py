@@ -10,7 +10,6 @@ import numpy as np
 # import pandas as pd
 import sqlite3 as sql
 
-
 ############################################
 ## -- Helper Functions
 ############################################
@@ -63,9 +62,7 @@ def server_begin():
     file = open(f'{ROOT_DIR}/config_files/symbols.csv', "r")
     symbols = file.readlines()
 
+    symbols = list(map(lambda pair: pair.replace('\n', ''), symbols))
     slave_container = SlaveContainer(config, symbols)
 
     return slave_container
-
-
-
