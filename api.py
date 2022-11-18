@@ -5,6 +5,9 @@ import csv
 from Helpers.Helpers import server_begin
 from SlaveContainer import SlaveContainer
 import logging
+import os
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
 
 app = Flask(__name__)
 
@@ -120,7 +123,8 @@ def homepage():
 
     final = bool(test_false) ^ bool(stop_run)
 
-    con = sql.connect("database.db")
+
+    con = sql.connect(dir_path + "/database.db")
     con.row_factory = sql.Row
 
     cur = con.cursor()
@@ -136,15 +140,8 @@ def homepage():
     master_key = []
     master_sec = []
 
-    for row in rows:
-        slave_keys.append(row["key"])
-        slave_sec.append(row["secret"])
 
-    for row in rows2:
-        master_key.append(row["key"])
-        master_sec.append(row["secret"])
-
-    with open('config_files/config.csv', mode='w', newline='') as file:
+    with open(dir_path + '/config_files/config.csv', mode='w', newline='') as file:
         writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         writer.writerow(['Master API Key'] + master_key + [""])
         writer.writerow(['Master API Keys'] + master_sec + [""])
@@ -156,4 +153,4 @@ def homepage():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', debug=True, port=8080)

@@ -21,3 +21,7 @@ cabal.project.local~
 .HTF/
 .ghc.environment.*
 config_files/config.json
+
+.idea/
+*.log
+*.iml

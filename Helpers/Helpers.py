@@ -4,6 +4,7 @@ import logging
 import logging.config
 import sys
 import os
+from pathlib import Path
 
 import numpy as np
 # import pandas as pd
@@ -14,7 +15,7 @@ import sqlite3 as sql
 ## -- Helper Functions
 ############################################
 
-ROOT_DIR = os.path.abspath(os.curdir)
+ROOT_DIR = Path(os.path.dirname(os.path.realpath(__file__))).parent.absolute()
 
 
 def create_logger():
