@@ -10,7 +10,7 @@ class Exchange(ABC):
         self.api = {'key': apiKey,
                     'secret': apiSecret}
         # delete '\n' from symbols'
-        self.pairs = list(map(lambda pair: pair.replace('\n', ''), pairs))
+        self.pairs = list(map(lambda pair: pair.replace('\n', '').replace('"', ''), pairs))
         self.name = name
         self.balance = None
         self.expected_orders = list()
