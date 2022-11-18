@@ -63,7 +63,7 @@ def master_form():
     print(request.form['comment_content'])
     print(request.form['comment_content2'])
     print(request.form['comment_content3'])
-    with sql.connect("database.db") as con:
+    with sql.connect(dir_path + "/database.db") as con:
         cur = con.cursor()
         cur.execute("INSERT INTO keys (name,key,secret,type) VALUES (?,?,?,?)", (
             request.form['comment_content3'], request.form['comment_content'], request.form['comment_content2'],
@@ -78,7 +78,7 @@ def master_form():
 
 @app.route('/delete_master')
 def delete_master():
-    with sql.connect("database.db") as con:
+    with sql.connect(dir_path + "/database.db") as con:
         cur = con.cursor()
         cur.execute("delete from keys where type='master'")
         con.commit()
@@ -89,7 +89,7 @@ def delete_master():
 
 @app.route('/delete_slave')
 def delete_slave():
-    with sql.connect("database.db") as con:
+    with sql.connect(dir_path + "/database.db") as con:
         cur = con.cursor()
         cur.execute("delete from keys where type='slave'")
         con.commit()
@@ -103,7 +103,7 @@ def slave_form():
     print(request.form['comment_content'])
     print(request.form['comment_content2'])
     print(request.form['comment_content3'])
-    with sql.connect("database.db") as con:
+    with sql.connect(dir_path + "/database.db") as con:
         cur = con.cursor()
         cur.execute("INSERT INTO keys (name,key,secret,type) VALUES (?,?,?,?)", (
             request.form['comment_content3'], request.form['comment_content'], request.form['comment_content2'],
@@ -123,7 +123,6 @@ def homepage():
 
     final = bool(test_false) ^ bool(stop_run)
 
-
     con = sql.connect(dir_path + "/database.db")
     con.row_factory = sql.Row
 
@@ -139,7 +138,6 @@ def homepage():
     slave_sec = []
     master_key = []
     master_sec = []
-
 
     with open(dir_path + '/config_files/config.csv', mode='w', newline='') as file:
         writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
